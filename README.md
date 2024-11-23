@@ -1,4 +1,4 @@
-# Assignment - Clean Architecture ✨
+# Boilerplate - Clean Architecture ✨
 
 This is a boilerplate for Clean Architecture with CQRS.
 (Not done yet, but will be soon)
