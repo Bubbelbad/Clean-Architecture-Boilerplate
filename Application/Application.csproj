@@ -9,11 +9,20 @@
   <ItemGroup>
     <Folder Include="Commands\" />
     <Folder Include="Dtos\" />
-    <Folder Include="Queries\" />
+    <Folder Include="Exceptions\Authorize\" />
+    <Folder Include="Exceptions\EntityNotFound\" />
+    <Folder Include="Exceptions\InvalidParameter\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>
