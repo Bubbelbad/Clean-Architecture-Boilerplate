@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Dtos\" />
     <Folder Include="Exceptions\Authorize\" />
     <Folder Include="Exceptions\EntityNotFound\" />
     <Folder Include="Exceptions\InvalidParameter\" />
