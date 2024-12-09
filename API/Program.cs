@@ -1,8 +1,8 @@
 using Application;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Infrastructure;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace API
 {
@@ -13,71 +13,29 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-            byte[] secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]!);
+            builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection")!);
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            builder.Services.AddAuthorization();    
 
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secretKey)
-                };
-            });
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>(); 
 
-            builder.Services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admin", policy =>
-                {
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser();
-                });
-            });
 
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clean Architecture", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "Authorize with your bearer token that generates when you login",
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer"
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
-
                 c.EnableAnnotations();
             });
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddApplication(); 
 
             var app = builder.Build();
+
+            app.MapIdentityApi<IdentityUser>(); 
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
