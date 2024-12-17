@@ -8,6 +8,8 @@ namespace Application
         {
             var assembly = typeof(DependencyInjection).Assembly;
             services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
+            
+            services.AddAutoMapper(assembly);
 
             //services.AddScoped<TokenHelper>();
 
