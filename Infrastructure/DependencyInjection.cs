@@ -1,4 +1,8 @@
-﻿using Infrastructure.Data;
+﻿using Domain.Interfaces;
+using Domain.Models;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +16,12 @@ namespace Infrastructure
             {
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddIdentityCore<User>(options => { })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;
         }
