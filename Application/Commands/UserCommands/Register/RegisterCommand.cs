@@ -1,5 +1,6 @@
-﻿using Application.Dtos;
-using Domain.Models;
+﻿using Application.Dtos.UserDtos;
+using Application.Models;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Commands.UserCommands.Register

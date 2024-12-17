@@ -1,6 +1,7 @@
-﻿using AutoMapper;
-using Domain.Interfaces;
-using Domain.Models;
+﻿using Application.Interfaces;
+using Application.Models;
+using AutoMapper;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Queries.UserQueries.GetAllUsers
