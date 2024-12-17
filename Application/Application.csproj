@@ -7,16 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions\Authorize\" />
-    <Folder Include="Exceptions\EntityNotFound\" />
-    <Folder Include="Exceptions\InvalidParameter\" />
-    <Folder Include="Validators\" />
+    <Compile Remove="Exceptions\**" />
+    <Compile Remove="Validators\**" />
+    <EmbeddedResource Remove="Exceptions\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Exceptions\**" />
+    <None Remove="Validators\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
   </ItemGroup>
 
