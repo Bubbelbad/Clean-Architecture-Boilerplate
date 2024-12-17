@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
-    "DefaultConnection": ""
+    "DefaultConnection": "YourConnectionStringHere"
   },
   "JwtSettings": {
     "SecretKey": "my_super_long_very_secret_key_etc"
@@ -10,5 +10,6 @@
       "Default": "Information",
       "Microsoft.AspNetCore": "Warning"
     }
-  }
+  },
+  "AllowedHosts": "*"
 }
