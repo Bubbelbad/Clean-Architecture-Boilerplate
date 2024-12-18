@@ -15,10 +15,10 @@ namespace API
             // Add services to the container.
             builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Boilerplate_DefaultConnection")!);
 
-            builder.Services.AddAuthorization();    
+            builder.Services.AddAuthorization();
 
             builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>(); 
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             builder.Services.AddSwaggerGen(c =>
@@ -31,11 +31,21 @@ namespace API
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddApplication(); 
+            builder.Services.AddApplication();
 
             var app = builder.Build();
 
-            app.MapIdentityApi<IdentityUser>(); 
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.MapIdentityApi<IdentityUser>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
