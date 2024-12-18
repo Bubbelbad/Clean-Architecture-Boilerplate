@@ -13,7 +13,7 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection")!);
+            builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Boilerplate_DefaultConnection")!);
 
             builder.Services.AddAuthorization();    
 
