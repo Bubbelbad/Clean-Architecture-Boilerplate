@@ -36,7 +36,6 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("GetUserById")]
-        [ResponseCache(CacheProfileName = "DefaultCache")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
             if (id == Guid.Empty)

@@ -22,7 +22,7 @@ namespace Infrastructure.Repositories
 
         public async Task<T> GetByIdAsync(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id.ToString());
         }
 
         public async Task<T> AddAsync(T entity)

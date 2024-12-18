@@ -27,6 +27,10 @@ namespace Application.Queries.UserQueries.GetUserById
             try
             {
                 User user = await _repository.GetByIdAsync(request.Id);
+                if (user == null)
+                {
+                    return OperationResult<User>.Failure("User does not exist.");
+                }
                 var mappedUser = _mapper.Map<User>(user);
                 return OperationResult<User>.Success(mappedUser);
             }
