@@ -1,4 +1,6 @@
-﻿using Application.Queries.UserQueries.GetAllUsers;
+﻿using Application.Commands.UserCommands.Register;
+using Application.Dtos.UserDtos;
+using Application.Queries.UserQueries.GetAllUsers;
 using Application.Queries.UserQueries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -55,6 +57,25 @@ namespace API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while fetching all Users at {time}", DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> Register([FromBody, Required] UserDto newUser)
+        {
+            _logger.LogInformation("Adding new User {username}", newUser.UserName);
+            try
+            {
+                var operationResult = await _mediator.Send(new RegisterCommand(newUser));
+                _logger.LogInformation("User {username} added successfully", operationResult.Data.UserName);
+                return Ok(operationResult.Data);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while adding new User");
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
